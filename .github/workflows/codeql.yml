@@ -24,10 +24,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # build-mode none (buildless extraction): the Android Gradle project
-          # exposes no testClasses task, so autobuild cannot compile it here.
+          # build-mode manual: autobuild's default gradle target (testClasses)
+          # does not exist in this Android project, and buildless extraction
+          # sees no Kotlin - so we compile exactly like build_apk.yml does.
           - language: java-kotlin
-            build-mode: none
+            build-mode: manual
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -42,6 +43,12 @@ jobs:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
           queries: security-extended,security-and-quality
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+      - name: Update LSPatch
+        run: ./gradlew setupLSPatch --no-daemon
+      - name: Build (compile Kotlin for extraction)
+        run: ./gradlew assembleDebug --no-daemon
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
         with:

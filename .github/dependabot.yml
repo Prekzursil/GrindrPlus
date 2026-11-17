@@ -1,0 +1,12 @@
+# Dependabot version updates — fleet security standard.
+# Weekly, every ecosystem present, zero ignored updates.
+version: 2
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"

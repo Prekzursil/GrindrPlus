@@ -10,3 +10,4 @@ local.properties
 .idea/*
 .idea
 build_keys/*
+research/tools/pairip-audit/tests/__pycache__/

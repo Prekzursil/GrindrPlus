@@ -45,10 +45,10 @@ jobs:
           queries: security-extended,security-and-quality
       - name: Make gradlew executable
         run: chmod +x ./gradlew
-      - name: Update LSPatch
-        run: ./gradlew setupLSPatch --no-daemon
       - name: Build (compile Kotlin for extraction)
-        run: ./gradlew assembleDebug --no-daemon
+        # compileDebugKotlin only: setupLSPatch fails under the CodeQL build
+        # tracer (ProcessOutputValueSource) and is not needed to compile.
+        run: ./gradlew compileDebugKotlin --no-daemon
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
         with:

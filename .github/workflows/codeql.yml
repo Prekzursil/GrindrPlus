@@ -24,8 +24,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          # build-mode none (buildless extraction): the Android Gradle project
+          # exposes no testClasses task, so autobuild cannot compile it here.
           - language: java-kotlin
-            build-mode: autobuild
+            build-mode: none
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
